@@ -1,17 +1,19 @@
 import styled from 'styled-components/native';
 
-export const Wrapper = styled.View`
+export const Wrapper = styled.ScrollView`
   background-color: #0F0F0F;
   flex: 1;
-  align-items: center;  
+  //align-items: center;  
 `;
 
-export const SectionHeader = styled.View`
+export const SectionHeader = styled.View<{ marginTop?: string }>`
   height: 48px;
   width: 100%;
   padding: 12px 16px;  
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  margin-top: ${props => props.marginTop ? props.marginTop : 0};
 `;
 
 export const Title = styled.Text`
@@ -21,9 +23,14 @@ export const Title = styled.Text`
   font-size: 20px;
 `;
 
-export const MoviesCardsWrap = styled.View`
+export const MoviesCardsWrap = styled.ScrollView`
   flex-direction: row;
   flex: 1;
-  gap: 20px;
-  padding-horizontal: 16px;  
+  padding-horizontal: 16px;
+`;
+
+export const IconsWrap = styled.View`
+  flex-direction: row;
+  align-items: center; 
+  gap: 12px;
 `;

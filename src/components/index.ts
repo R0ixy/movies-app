@@ -1,4 +1,5 @@
-import { MovieCard } from "./MovieCard";
-import { MovieBanner } from "./MovieBanner";
+import { MovieCard } from './MovieCard';
+import { MovieBanner } from './MovieBanner';
+import { Icon } from './Icon';
 
-export { MovieBanner, MovieCard };
+export { MovieBanner, MovieCard, Icon };

@@ -16,13 +16,14 @@ type MovieBannerProps = {
     title: string,
     genre: string,
     description: string,
-    image: object,
-  }
+    image: number,
+  },
+  styleWrapper?: object | {}
 }
 
-const MovieBanner = ({ movie }: MovieBannerProps) => {
+const MovieBanner = ({ movie, styleWrapper }: MovieBannerProps) => {
   return (
-    <Wrapper>
+    <Wrapper style={styleWrapper}>
       <MovieImage source={movie.image} />
       <GenreLabel>
         <GenreText>{movie.genre}</GenreText>

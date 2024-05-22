@@ -1,43 +1,49 @@
 import React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { View, Image, TouchableOpacity } from "react-native";
 
-// @ts-ignore
-import movieBanner from '../../assets/images/movie_banner_1.png'
+import gift from '../../assets/images/gift.png';
+import { MovieBanner, MovieCard, Icon } from '../../components';
+import { MoviesCardsWrap, SectionHeader, Title, Wrapper, IconsWrap } from './StyledComponents.ts';
 
-import { MovieBanner } from '../../components';
-import { MoviesCardsWrap, SectionHeader, Title, Wrapper } from './StyledComponents.ts';
-
-const movies = [
-  {
-    id: 1,
-    title: 'Lethal Limits',
-    genre: 'romance',
-    description: 'Dustin\'s Gamble',
-    image: movieBanner,
-  },
-  {
-    id: 2,
-    title: 'Lethal Limits',
-    genre: 'romance',
-    description: 'Dustin\'s Gamble',
-    image: movieBanner,
-  }
-];
+import { banners, tranding, topRomance } from './mockdata.ts';
 
 const HomeScreen = () => {
   return (
-    <Wrapper>
+    <Wrapper showsVerticalScrollIndicator={false}>
       <SectionHeader>
         <Title>Home</Title>
-        {/*<Title>df</Title>*/}
+        <IconsWrap>
+          <TouchableOpacity activeOpacity={0.8}>
+            <Image source={gift} style={{ height: 43, width: 43, marginBottom: 8 }} />
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.8}>
+            <Icon name="search" size={24} />
+          </TouchableOpacity>
+        </IconsWrap>
       </SectionHeader>
-      <ScrollView horizontal pagingEnabled>
-        <MoviesCardsWrap>
-          {movies.map((movie) => (
-            <MovieBanner key={movie.id} movie={movie} />
+      <View style={{ height: 216 }}>
+        <MoviesCardsWrap horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
+          {banners.map((banner) => (
+            <MovieBanner key={banner.id} movie={banner} styleWrapper={{ marginRight: 12 }}/>
           ))}
         </MoviesCardsWrap>
-      </ScrollView>
+      </View>
+      <SectionHeader marginTop="44px">
+        <Title>Trending Now</Title>
+      </SectionHeader>
+      <MoviesCardsWrap horizontal showsHorizontalScrollIndicator={false}>
+        {tranding.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} styleWrapper={{ marginRight: 12 }}/>
+        ))}
+      </MoviesCardsWrap>
+      <SectionHeader marginTop="44px">
+        <Title>Top Romance</Title>
+      </SectionHeader>
+      <MoviesCardsWrap horizontal showsHorizontalScrollIndicator={false}>
+        {topRomance.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} styleWrapper={{ marginRight: 12 }}/>
+        ))}
+      </MoviesCardsWrap>
     </Wrapper>
   );
 };
