@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { ActivityIndicator, View, ImageURISource, TouchableOpacity, SafeAreaView } from "react-native";
+import { ActivityIndicator, View, ImageURISource, TouchableOpacity } from "react-native";
 import Video, { VideoRef } from "react-native-video";
 import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
@@ -28,13 +28,13 @@ const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [paused, setPaused] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
 
   const onPlayPausePress = () => {
-    setPaused(!paused);
+    setIsPaused(prev => !prev);
   };
 
   const onSeek = (time: number) => {
@@ -62,13 +62,13 @@ const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
     }
 
     timerRef.current = setTimeout(() => {
-      setVisible(false);
+      setIsVisible(false);
     }, 5000);
   };
 
   const handleTouch = () => {
     onPlayPausePress();
-    setVisible(true);
+    setIsVisible(true);
     startTimer();
   };
 
@@ -76,10 +76,11 @@ const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
     if (!videoRef.current) return;
     if (shouldPlay) {
       videoRef.current.resume();
-      setVisible(true);
+      setIsPaused(false);
+      setIsVisible(true);
     } else {
       videoRef.current.pause();
-      videoRef.current.seek(0);
+      setIsPaused(true);
     }
   }, [shouldPlay]);
 
@@ -112,7 +113,7 @@ const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
           setIsLoading(false)
           setDuration(data.duration);
         }}
-        paused={paused}
+        paused={isPaused}
         onProgress={(data) => setCurrentTime(data.currentTime)}
         resizeMode="cover"
         style={{
@@ -120,7 +121,7 @@ const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
           height: '100%',
         }}
       />
-      {visible && (
+      {isVisible && (
         <>
           <Header colors={['#000000', 'rgba(0,0,0,0)']}>
             <TouchableOpacity onPress={navigation.goBack} style={{ position: 'absolute', left: 22 }}>
@@ -129,7 +130,7 @@ const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
             <EpisodeNumber>Episode {video.episode}</EpisodeNumber>
           </Header>
           <Footer colors={['rgba(0,0,0,0)', '#000000']}>
-            <PlayPauseSwitcher paused={paused} onPressCb={onPlayPausePress} />
+            <PlayPauseSwitcher paused={isPaused} onPressCb={onPlayPausePress} styleWrapper={{ bottom: 7 }} />
             <SliderWrap>
               <Slider
                 style={{
