@@ -1,8 +1,7 @@
 import styled from 'styled-components/native';
 
-export const Wrapper = styled.TouchableOpacity`
-  //width: 90%;  
-    width: 360px;
+export const Wrapper = styled.TouchableOpacity<{ width: string }>`
+  width: ${props => props.width ? props.width : '100%'};
   height: 216px;
   border-radius: 12px;
   background-color: white;

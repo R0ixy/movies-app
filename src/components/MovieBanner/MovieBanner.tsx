@@ -1,4 +1,5 @@
 import React from 'react';
+import { useWindowDimensions } from 'react-native';
 
 import {
   GenreLabel,
@@ -23,8 +24,10 @@ type MovieBannerProps = {
 }
 
 const MovieBanner = ({ movie, onPress, styleWrapper }: MovieBannerProps) => {
+  const { width } = useWindowDimensions();
+
   return (
-    <Wrapper onPress={onPress} style={styleWrapper}>
+    <Wrapper onPress={onPress} style={styleWrapper} width={`${width * 0.90}px`}>
       <MovieImage source={movie.image} />
       <GenreLabel>
         <GenreText>{movie.genre}</GenreText>

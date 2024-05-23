@@ -3,14 +3,16 @@ import { View, Image, TouchableOpacity, ScrollView } from "react-native";
 import type { StackScreenProps } from '@react-navigation/stack';
 
 import gift from '../../assets/images/gift.png';
-import { MovieBanner, MovieCard, Icon } from '../../components';
+import { MovieBanner, MovieCard, Icon, ContinueWatching } from '../../components';
+
 import { MoviesCardsWrap, SectionHeader, Title, Wrapper, IconsWrap } from './StyledComponents.ts';
-
 import { banners, homeScreenContent } from './mockdata.ts';
+import type { HomeStackParamList } from './HomeScreenStack.tsx';
 
-type HomeScreenProps = StackScreenProps<{}>;
+type HomeScreenProps = StackScreenProps<HomeStackParamList, 'HomeScreen'>;
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
+
   return (
     <Wrapper>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -31,16 +33,21 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
               <MovieBanner
                 key={banner.id}
                 movie={banner}
-                // @ts-ignore
                 onPress={() => navigation.navigate('VideoPlayer')}
                 styleWrapper={{ marginRight: 12 }}
               />
             ))}
           </MoviesCardsWrap>
         </View>
+        <View>
+          <SectionHeader marginTop="36px">
+            <Title>Continue Watching</Title>
+          </SectionHeader>
+          <ContinueWatching />
+        </View>
         {homeScreenContent.map(item => (
           <View key={item.id}>
-            <SectionHeader marginTop="44px">
+            <SectionHeader marginTop="36px">
               <Title>{item.label}</Title>
             </SectionHeader>
             <MoviesCardsWrap horizontal showsHorizontalScrollIndicator={false}>

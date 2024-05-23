@@ -5,6 +5,7 @@ import Search from '../../assets/icons/search.svg';
 import Close from '../../assets/icons/close.svg';
 import Play from '../../assets/icons/play.svg';
 import Pause from '../../assets/icons/pause.svg';
+import ArrowRight from '../../assets/icons/arrow-right.svg';
 
 type IconPropsType = {
   size?: number,
@@ -24,6 +25,8 @@ const icons: { [key: string]: React.FC<React.SVGProps<SVGSVGElement>> } = {
   play: Play,
   // @ts-ignore
   pause: Pause,
+  // @ts-ignore
+  arrowRight: ArrowRight,
 }
 
 const Icon = ({ size, name, height, width, ...rest }: IconPropsType) => {
