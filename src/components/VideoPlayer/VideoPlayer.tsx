@@ -3,12 +3,14 @@ import { ActivityIndicator, View, ImageURISource, TouchableOpacity } from 'react
 import Video, { VideoRef } from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
-import { useSafeAreaFrame } from "react-native-safe-area-context";
+import { useSafeAreaFrame } from 'react-native-safe-area-context';
+// import { useMMKVStorage } from 'react-native-mmkv-storage';
 
 import sliderThumb from '../../assets/images/slider-thumb.png';
 import { Icon } from '../Icon';
 import { PlayPauseSwitcher } from '../PlayPauseSwitcher';
 import { EpisodeNumber, Footer, Header, SliderWrap, TimeText, TimeWrap } from './StyledComponents.ts';
+// import { MMKV } from "../../asyncStore";
 
 type VideoPlayerProps = {
   video: {
@@ -20,12 +22,25 @@ type VideoPlayerProps = {
   onEndCb: () => void,
 }
 
+type lastMovieType = {
+  currentEpisode: number,
+  currentTime: number,
+  movie?: {
+    id: number,
+    title: string,
+    description: string,
+    image: string,
+  }
+}
+
 const VideoPlayer = ({ video, shouldPlay, onEndCb }: VideoPlayerProps) => {
   const videoRef = useRef<VideoRef>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const navigation = useNavigation();
   const { width, height } = useSafeAreaFrame();
+
+  // const [lastMovie, setLastMovie] = useMMKVStorage<lastMovieType>("lastMovie", MMKV, { currentEpisode: 0, currentTime: 0 });
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -95,6 +110,22 @@ const VideoPlayer = ({ video, shouldPlay, onEndCb }: VideoPlayerProps) => {
     };
   }, []);
 
+  // useEffect(() => () => {
+  //   if (shouldPlay) {
+  //     console.log('unmount', video);
+  //     setLastMovie({
+  //       currentEpisode: video.episode,
+  //       currentTime: currentTime,
+  //       movie: {
+  //         id: video.id,
+  //         title: '',
+  //         description: '',
+  //         image: '',
+  //       }
+  //     });
+  //   }
+  // }, []);
+
   return (
     <View
       style={{
@@ -125,13 +156,13 @@ const VideoPlayer = ({ video, shouldPlay, onEndCb }: VideoPlayerProps) => {
       />
       {isVisible && (
         <>
-          <Header colors={['#000000', 'rgba(0,0,0,0)']}>
+          <Header colors={['#0F0F0F', 'rgba(0,0,0,0)']}>
             <TouchableOpacity onPress={navigation.goBack} style={{ position: 'absolute', left: 22 }}>
               <Icon name="close" size={24} />
             </TouchableOpacity>
             <EpisodeNumber>Episode {video.episode}</EpisodeNumber>
           </Header>
-          <Footer colors={['rgba(0,0,0,0)', '#000000']}>
+          <Footer colors={['rgba(0,0,0,0)', '#0F0F0F']}>
             <PlayPauseSwitcher paused={isPaused} onPressCb={onPlayPausePress} styleWrapper={{ bottom: 7 }} />
             <SliderWrap>
               <Slider

@@ -1,8 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { useSafeAreaFrame } from "react-native-safe-area-context";
+// import { useMMKVStorage } from "react-native-mmkv-storage";
 
-import { VideoPlayer } from '@components';
+// import { MMKV } from "../../asyncStore";
+import { VideoPlayer } from '../../components';
 
 const videos = [
   {
@@ -47,8 +49,21 @@ const videos = [
   },
 ];
 
+type lastMovieType = {
+  currentEpisode: number,
+  currentTime: number,
+  movie?: {
+    id: number,
+    title: string,
+    description: string,
+    image: string,
+  }
+}
+
 const VideoPlayerScreen = () => {
   const { height } = useSafeAreaFrame();
+
+  // const [lastMovie, setLastMovie] = useMMKVStorage<lastMovieType>("lastMovie", MMKV, { currentEpisode: 0, currentTime: 0 });
 
   const [currentViewableItemIndex, setCurrentViewableItemIndex] = useState(0);
   const viewabilityConfig = { viewAreaCoveragePercentThreshold: 50 }
@@ -68,6 +83,25 @@ const VideoPlayerScreen = () => {
     }
   }
 
+  const data = {
+    continueWatching: {
+      currentEpisode: 1,
+      currentTime: 11221,
+      movie: {
+        id: 4,
+        title: 'Crescent',
+        description: '',
+        image: '',
+      }
+    }
+  }
+
+  // console.log({ lastMovie });
+
+  // useEffect(() => {
+  //
+  // }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -76,6 +110,7 @@ const VideoPlayerScreen = () => {
         renderItem={({ item, index }) => (
           <VideoPlayer video={item} onEndCb={() => handleNextVideo(index)} shouldPlay={index === currentViewableItemIndex} />
         )}
+        // initialScrollIndex={(lastMovie.currentEpisode - 1) * height}
         keyExtractor={item => String(item.id)}
         snapToInterval={height}
         decelerationRate="fast"

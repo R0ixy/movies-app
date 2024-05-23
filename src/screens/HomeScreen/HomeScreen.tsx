@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, ScrollView } from "react-native";
 import type { StackScreenProps } from '@react-navigation/stack';
 
 import gift from '../../assets/images/gift.png';
-import { MovieBanner, MovieCard, Icon, ContinueWatching } from '@components';
+import { MovieBanner, MovieCard, Icon, ContinueWatching } from '../../components';
 
 import { MoviesCardsWrap, SectionHeader, Title, Wrapper, IconsWrap } from './StyledComponents.ts';
 import { banners, homeScreenContent } from './mockdata.ts';
