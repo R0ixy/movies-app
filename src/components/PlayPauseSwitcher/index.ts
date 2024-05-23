@@ -1,1 +1,1 @@
-export { PlayPauseSwitcher } from "./PlayPauseSwitcher.tsx";
+export { PlayPauseSwitcher } from './PlayPauseSwitcher.tsx';

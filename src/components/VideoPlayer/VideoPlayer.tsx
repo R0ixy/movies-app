@@ -1,14 +1,14 @@
-import React, { useRef, useEffect, useState } from "react";
-import { ActivityIndicator, View, ImageURISource, TouchableOpacity } from "react-native";
-import Video, { VideoRef } from "react-native-video";
+import React, { useRef, useEffect, useState } from 'react';
+import { ActivityIndicator, View, ImageURISource, TouchableOpacity } from 'react-native';
+import Video, { VideoRef } from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaFrame } from "react-native-safe-area-context";
 
 import sliderThumb from '../../assets/images/slider-thumb.png';
 import { Icon } from '../Icon';
-import { EpisodeNumber, Footer, Header, SliderWrap, TimeText, TimeWrap } from "./StyledComponents.ts";
-import { PlayPauseSwitcher } from "../PlayPauseSwitcher";
-import { useSafeAreaFrame } from "react-native-safe-area-context";
+import { PlayPauseSwitcher } from '../PlayPauseSwitcher';
+import { EpisodeNumber, Footer, Header, SliderWrap, TimeText, TimeWrap } from './StyledComponents.ts';
 
 type VideoPlayerProps = {
   video: {

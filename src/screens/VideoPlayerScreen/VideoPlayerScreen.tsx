@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 
-import { VideoPlayer } from '../../components';
+import { VideoPlayer } from '@components';
 
 const videos = [
   {

@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from 'react-native';
 
 import { Icon } from '../Icon';
-import { CardImage, CardTitle, IconWrap, ReleaseDate, Wrapper } from "./StyledComponents.ts";
+import { CardImage, CardTitle, IconWrap, ReleaseDate, Wrapper } from './StyledComponents.ts';
 
 type MovieCardProps = {
   movie: {

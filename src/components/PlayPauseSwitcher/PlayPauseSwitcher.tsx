@@ -1,7 +1,7 @@
-import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
 
-import { Icon } from "../Icon";
+import { Icon } from '../Icon';
 
 type PlayPauseSwitcherProps = {
   paused: boolean,

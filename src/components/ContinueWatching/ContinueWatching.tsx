@@ -3,7 +3,7 @@ import { Image, View } from 'react-native';
 
 import { Icon } from '../Icon';
 
-import { MovieDescription, MovieTitle, RowWrap, Wrap } from "./StyledComponents.ts";
+import { MovieDescription, MovieTitle, RowWrap, Wrap } from './StyledComponents.ts';
 
 const ContinueWatching = ({  }) => {
 
