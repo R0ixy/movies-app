@@ -77,4 +77,17 @@ const topRomance = [
   },
 ];
 
-export { banners, tranding, topRomance };
+const homeScreenContent = [
+  {
+    id: 1,
+    label: 'Trending Now',
+    content: tranding,
+  },
+  {
+    id: 2,
+    label: 'Top Romance',
+    content: topRomance,
+  },
+]
+
+export { banners, homeScreenContent };
