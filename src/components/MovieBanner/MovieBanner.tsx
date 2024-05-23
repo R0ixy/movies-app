@@ -18,12 +18,13 @@ type MovieBannerProps = {
     description: string,
     image: number,
   },
+  onPress: () => void,
   styleWrapper?: object | {}
 }
 
-const MovieBanner = ({ movie, styleWrapper }: MovieBannerProps) => {
+const MovieBanner = ({ movie, onPress, styleWrapper }: MovieBannerProps) => {
   return (
-    <Wrapper style={styleWrapper}>
+    <Wrapper onPress={onPress} style={styleWrapper}>
       <MovieImage source={movie.image} />
       <GenreLabel>
         <GenreText>{movie.genre}</GenreText>
