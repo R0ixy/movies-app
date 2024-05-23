@@ -10,9 +10,6 @@ import { EpisodeNumber, Footer, Header, SliderWrap, TimeText, TimeWrap } from ".
 import { PlayPauseSwitcher } from "../PlayPauseSwitcher";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 
-const videoSource =
-  'https://dj0vkl2i4vsbo.cloudfront.net/convert/wife_caught_husband/converted/3wife3.m3u8';
-
 type VideoPlayerProps = {
   video: {
     id: number,
@@ -79,35 +76,31 @@ const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
     if (!videoRef.current) return;
     if (shouldPlay) {
       videoRef.current.resume();
+      setVisible(true);
     } else {
       videoRef.current.pause();
       videoRef.current.seek(0);
     }
   }, [shouldPlay]);
 
-  // useEffect(() => {
-  //   startTimer();
-  //
-  //   return () => {
-  //     if (timerRef.current) {
-  //       clearTimeout(timerRef.current);
-  //     }
-  //   };
-  // }, []);
-  // console.log(Dimensions.get('window').height)
+  useEffect(() => {
+    startTimer();
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <View
       style={{
-        // flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#0F0F0F',
-        // backgroundColor: 'red',
         width: width,
         height: height,
-        // bottom: 20,
-        // paddingVertical: 10,
       }}
     >
       <Video
@@ -121,20 +114,10 @@ const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
         }}
         paused={paused}
         onProgress={(data) => setCurrentTime(data.currentTime)}
-        // fullscreen
         resizeMode="cover"
         style={{
-          // flex: 1,
-          // position: 'absolute',
-          // backgroundColor: 'red',
-          // borderWidth: 10,
-          // position: 'absolute',
           width: '100%',
           height: '100%',
-          // top: 0,
-          // left: 0,
-          // bottom: 0,
-          // right: 0,
         }}
       />
       {visible && (

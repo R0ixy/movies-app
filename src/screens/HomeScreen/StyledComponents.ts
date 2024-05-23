@@ -1,9 +1,8 @@
 import styled from 'styled-components/native';
 
-export const Wrapper = styled.ScrollView`
+export const Wrapper = styled.View`
   background-color: #0F0F0F;
   flex: 1;
-  //align-items: center;  
 `;
 
 export const SectionHeader = styled.View<{ marginTop?: string }>`
@@ -25,7 +24,6 @@ export const Title = styled.Text`
 
 export const MoviesCardsWrap = styled.ScrollView`
   flex-direction: row;
-  flex: 1;
   padding-horizontal: 16px;
 `;
 
