@@ -59,14 +59,22 @@ const VideoPlayerScreen = () => {
     }
   }
 
+  const listRef = useRef<FlatList>(null);
   const viewabilityConfigCallbackPairs = useRef([{ viewabilityConfig, onViewableItemsChanged }])
+
+  const handleNextVideo = (index: number) => {
+    if (listRef.current){
+      listRef.current.scrollToOffset({ offset: (index + 1) * height });
+    }
+  }
 
   return (
     <View style={{ flex: 1 }}>
       <FlatList
+        ref={listRef}
         data={videos}
         renderItem={({ item, index }) => (
-          <VideoPlayer video={item} shouldPlay={index === currentViewableItemIndex} />
+          <VideoPlayer video={item} onEndCb={() => handleNextVideo(index)} shouldPlay={index === currentViewableItemIndex} />
         )}
         keyExtractor={item => String(item.id)}
         snapToInterval={height}

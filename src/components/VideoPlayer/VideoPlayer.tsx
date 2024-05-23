@@ -17,9 +17,10 @@ type VideoPlayerProps = {
     url: string,
   },
   shouldPlay: boolean,
+  onEndCb: () => void,
 }
 
-const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
+const VideoPlayer = ({ video, shouldPlay, onEndCb }: VideoPlayerProps) => {
   const videoRef = useRef<VideoRef>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -113,6 +114,7 @@ const VideoPlayer = ({ video, shouldPlay }: VideoPlayerProps) => {
           setIsLoading(false)
           setDuration(data.duration);
         }}
+        onEnd={onEndCb}
         paused={isPaused}
         onProgress={(data) => setCurrentTime(data.currentTime)}
         resizeMode="cover"
