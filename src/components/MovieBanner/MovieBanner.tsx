@@ -1,6 +1,7 @@
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 
+import { BannerMovie } from '../../types';
 import {
   GenreLabel,
   GenreText,
@@ -12,13 +13,7 @@ import {
 } from './StyledComponents.ts';
 
 type MovieBannerProps = {
-  movie: {
-    id: number,
-    title: string,
-    genre: string,
-    description: string,
-    image: number,
-  },
+  movie: BannerMovie,
   onPress: () => void,
   styleWrapper?: object | {}
 }
@@ -28,7 +23,7 @@ const MovieBanner = ({ movie, onPress, styleWrapper }: MovieBannerProps) => {
 
   return (
     <Wrapper onPress={onPress} style={styleWrapper} width={`${width * 0.90}px`}>
-      <MovieImage source={movie.image} />
+      <MovieImage source={{ uri: movie.image }} />
       <GenreLabel>
         <GenreText>{movie.genre}</GenreText>
       </GenreLabel>

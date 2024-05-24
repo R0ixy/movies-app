@@ -2,15 +2,11 @@ import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 import { Icon } from '../Icon';
+import { CardMovie } from '../../types';
 import { CardImage, CardTitle, IconWrap, ReleaseDate, Wrapper } from './StyledComponents.ts';
 
 type MovieCardProps = {
-  movie: {
-    id: number,
-    title: string,
-    releaseDate: string,
-    image: number,
-  },
+  movie: CardMovie,
   styleWrapper?: object | {}
 }
 
@@ -30,7 +26,7 @@ const MovieCard = ({ movie, styleWrapper }: MovieCardProps) => {
 
   return (
     <Wrapper as={isMovieShown ? TouchableOpacity : View} style={styleWrapper}>
-      <CardImage source={movie.image} blurRadius={isMovieShown ? 0 : 32} />
+      <CardImage source={{ uri: movie.image }} blurRadius={isMovieShown ? 0 : 32} />
       {!isMovieShown && (
         <IconWrap>
           <Icon name="locked" size={48} />
