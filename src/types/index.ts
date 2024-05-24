@@ -12,3 +12,14 @@ export type CardMovie = {
   releaseDate: string;
   image: string;
 };
+
+export type LastMovieType = {
+  currentEpisode: number,
+  currentTime: number,
+  movie: {
+    id: number,
+    title: string,
+    description: string,
+    image: string,
+  }
+}

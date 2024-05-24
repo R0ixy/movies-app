@@ -4,13 +4,12 @@ import Video, { VideoRef } from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
-// import { useMMKVStorage } from 'react-native-mmkv-storage';
 
 import sliderThumb from '../../assets/images/slider-thumb.png';
 import { Icon } from '../Icon';
 import { PlayPauseSwitcher } from '../PlayPauseSwitcher';
+import { LastMovieType } from '../../types';
 import { EpisodeNumber, Footer, Header, SliderWrap, TimeText, TimeWrap } from './StyledComponents.ts';
-// import { MMKV } from "../../asyncStore";
 
 type VideoPlayerProps = {
   video: {
@@ -19,28 +18,17 @@ type VideoPlayerProps = {
     url: string,
   },
   shouldPlay: boolean,
+  startTime: number,
   onEndCb: () => void,
+  setLastMovieCb: (value: (LastMovieType | ((prevValue: (LastMovieType | undefined)) => (LastMovieType | undefined)) | undefined)) => void,
 }
 
-type lastMovieType = {
-  currentEpisode: number,
-  currentTime: number,
-  movie?: {
-    id: number,
-    title: string,
-    description: string,
-    image: string,
-  }
-}
-
-const VideoPlayer = ({ video, shouldPlay, onEndCb }: VideoPlayerProps) => {
+const VideoPlayer = ({ video, shouldPlay, startTime, onEndCb, setLastMovieCb }: VideoPlayerProps) => {
   const videoRef = useRef<VideoRef>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const navigation = useNavigation();
   const { width, height } = useSafeAreaFrame();
-
-  // const [lastMovie, setLastMovie] = useMMKVStorage<lastMovieType>("lastMovie", MMKV, { currentEpisode: 0, currentTime: 0 });
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -91,6 +79,7 @@ const VideoPlayer = ({ video, shouldPlay, onEndCb }: VideoPlayerProps) => {
   useEffect(() => {
     if (!videoRef.current) return;
     if (shouldPlay) {
+      videoRef.current.seek(startTime);
       videoRef.current.resume();
       setIsPaused(false);
       setIsVisible(true);
@@ -110,21 +99,20 @@ const VideoPlayer = ({ video, shouldPlay, onEndCb }: VideoPlayerProps) => {
     };
   }, []);
 
-  // useEffect(() => () => {
-  //   if (shouldPlay) {
-  //     console.log('unmount', video);
-  //     setLastMovie({
-  //       currentEpisode: video.episode,
-  //       currentTime: currentTime,
-  //       movie: {
-  //         id: video.id,
-  //         title: '',
-  //         description: '',
-  //         image: '',
-  //       }
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (shouldPlay && currentTime > 3) {
+      setLastMovieCb({
+        currentEpisode: video.episode,
+        currentTime: currentTime,
+        movie: {
+          id: video.id,
+          title: '',
+          description: '',
+          image: '',
+        }
+      });
+    }
+  }, [currentTime, shouldPlay]);
 
   return (
     <View

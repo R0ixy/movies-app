@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { useSafeAreaFrame } from "react-native-safe-area-context";
-// import { useMMKVStorage } from "react-native-mmkv-storage";
+import { useMMKVStorage } from "react-native-mmkv-storage";
 
-// import { MMKV } from "../../asyncStore";
+import { MMKV } from "../../asyncStore";
 import { VideoPlayer } from '../../components';
+import { LastMovieType } from '../../types';
 
 const videos = [
   {
@@ -49,21 +50,10 @@ const videos = [
   },
 ];
 
-type lastMovieType = {
-  currentEpisode: number,
-  currentTime: number,
-  movie?: {
-    id: number,
-    title: string,
-    description: string,
-    image: string,
-  }
-}
-
 const VideoPlayerScreen = () => {
   const { height } = useSafeAreaFrame();
 
-  // const [lastMovie, setLastMovie] = useMMKVStorage<lastMovieType>("lastMovie", MMKV, { currentEpisode: 0, currentTime: 0 });
+  const [lastMovie, setLastMovie] = useMMKVStorage<LastMovieType | undefined>("lastMovie", MMKV, undefined);
 
   const [currentViewableItemIndex, setCurrentViewableItemIndex] = useState(0);
   const viewabilityConfig = { viewAreaCoveragePercentThreshold: 50 }
@@ -83,24 +73,10 @@ const VideoPlayerScreen = () => {
     }
   }
 
-  const data = {
-    continueWatching: {
-      currentEpisode: 1,
-      currentTime: 11221,
-      movie: {
-        id: 4,
-        title: 'Crescent',
-        description: '',
-        image: '',
-      }
-    }
-  }
-
-  // console.log({ lastMovie });
-
-  // useEffect(() => {
-  //
-  // }, []);
+  const getStartTime = (lastMovie: LastMovieType | undefined, index: number) => {
+    if (!lastMovie) return 0;
+    return lastMovie.currentEpisode - 1 === index ? lastMovie.currentTime : 0;
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -108,9 +84,19 @@ const VideoPlayerScreen = () => {
         ref={listRef}
         data={videos}
         renderItem={({ item, index }) => (
-          <VideoPlayer video={item} onEndCb={() => handleNextVideo(index)} shouldPlay={index === currentViewableItemIndex} />
+          <VideoPlayer
+            video={item}
+            onEndCb={() => {
+              if (index + 1 !== videos.length) handleNextVideo(index);
+              else setLastMovie(undefined);
+            }}
+            shouldPlay={index === currentViewableItemIndex}
+            startTime={getStartTime(lastMovie, index)}
+            setLastMovieCb={setLastMovie}
+          />
         )}
-        // initialScrollIndex={(lastMovie.currentEpisode - 1) * height}
+        initialScrollIndex={lastMovie ? lastMovie.currentEpisode - 1 : 0}
+        getItemLayout={(data, index) => ({ length: height, offset: height * index, index })}
         keyExtractor={item => String(item.id)}
         snapToInterval={height}
         decelerationRate="fast"
