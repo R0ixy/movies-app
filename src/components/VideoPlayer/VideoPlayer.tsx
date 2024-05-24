@@ -101,7 +101,7 @@ const VideoPlayer = ({ video, shouldPlay, startTime, movie, onEndCb, setLastMovi
   }, []);
 
   useEffect(() => {
-    if (shouldPlay && currentTime > 3) {
+    if (shouldPlay && Math.floor(currentTime) % 5 === 0) { // saving video state every 5 seconds
       setLastMovieCb({
         currentEpisode: video.episode,
         currentTime: currentTime,
