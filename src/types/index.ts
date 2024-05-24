@@ -10,10 +10,5 @@ export type MovieType = {
 export type LastMovieType = {
   currentEpisode: number,
   currentTime: number,
-  movie: {
-    id: number,
-    title: string,
-    description: string,
-    image: string,
-  }
+  movie: MovieType,
 };

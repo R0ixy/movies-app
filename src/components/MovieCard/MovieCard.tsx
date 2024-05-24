@@ -7,10 +7,11 @@ import { CardImage, CardTitle, IconWrap, ReleaseDate, Wrapper } from './StyledCo
 
 type MovieCardProps = {
   movie: MovieType,
+  onPressCb: () => void,
   styleWrapper?: object,
 };
 
-const MovieCard = ({ movie, styleWrapper }: MovieCardProps) => {
+const MovieCard = ({ movie, onPressCb, styleWrapper }: MovieCardProps) => {
 
   const parseDate = (dateString: string) => {
     const [day, month, year] = dateString.split('.');
@@ -25,7 +26,7 @@ const MovieCard = ({ movie, styleWrapper }: MovieCardProps) => {
   const isMovieShown = parseDate(movie.releaseDate) < new Date();
 
   return (
-    <Wrapper as={isMovieShown ? TouchableOpacity : View} style={styleWrapper}>
+    <Wrapper as={isMovieShown ? TouchableOpacity : View} onPress={onPressCb} style={styleWrapper}>
       <CardImage source={{ uri: movie.image }} blurRadius={isMovieShown ? 0 : 32} />
       {!isMovieShown && (
         <IconWrap>

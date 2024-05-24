@@ -105,12 +105,7 @@ const VideoPlayer = ({ video, shouldPlay, startTime, movie, onEndCb, setLastMovi
       setLastMovieCb({
         currentEpisode: video.episode,
         currentTime: currentTime,
-        movie: {
-          id: video.id,
-          title: movie.title,
-          description: movie.description,
-          image: movie.image,
-        },
+        movie,
       });
     }
   }, [currentTime, shouldPlay]);

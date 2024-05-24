@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import remoteConfig from '@react-native-firebase/remote-config';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
 
 import gift from '../../assets/images/gift.png';
 import { MovieBanner, MovieCard, Icon, ContinueWatching } from '../../components';
-import { MovieType } from '../../types';
+import { LastMovieType, MovieType } from '../../types';
+import { MMKV } from '../../asyncStore';
 
 import { MoviesCardsWrap, SectionHeader, Title, Wrapper, IconsWrap } from './StyledComponents.ts';
 import type { HomeStackParamList } from './HomeScreenStack.tsx';
@@ -27,6 +29,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   const [content, setContent] = useState<HomeScreenContentType>({});
 
+  const [lastMovie] = useMMKVStorage<LastMovieType | undefined>('lastMovie', MMKV, undefined);
+
   const fetchRemoteConfig = async () => {
     await remoteConfig().setConfigSettings({
       minimumFetchIntervalMillis: 3600000,
@@ -38,8 +42,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     if (config) {
       return JSON.parse(config);
     } 
-      return null;
-    
+    return null;
   };
 
   useEffect(() => {
@@ -69,19 +72,21 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                 <MovieBanner
                   key={banner.id}
                   movie={banner}
-                  onPress={() => navigation.navigate('VideoPlayer', { movie: banner })}
+                  onPressCb={() => navigation.navigate('VideoPlayer', { movie: banner })}
                   styleWrapper={{ marginRight: 12 }}
                 />
               ))}
             </MoviesCardsWrap>
           </View>
         )}
-        <View>
-          <SectionHeader marginTop="36px">
-            <Title>Continue Watching</Title>
-          </SectionHeader>
-          <ContinueWatching />
-        </View>
+        {lastMovie && (
+          <View>
+            <SectionHeader marginTop="36px">
+              <Title>Continue Watching</Title>
+            </SectionHeader>
+            <ContinueWatching movie={lastMovie.movie} onPressCb={() => navigation.navigate('VideoPlayer', { movie: lastMovie?.movie })} />
+          </View>
+        )}
         {content?.sections?.map(item => (
           <View key={item.id}>
             <SectionHeader marginTop="36px">
@@ -89,7 +94,12 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             </SectionHeader>
             <MoviesCardsWrap horizontal showsHorizontalScrollIndicator={false}>
               {item.content.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} styleWrapper={{ marginRight: 12 }}/>
+                <MovieCard
+                  key={movie.id}
+                  movie={movie}
+                  onPressCb={() => navigation.navigate('VideoPlayer', { movie })}
+                  styleWrapper={{ marginRight: 12 }}
+                />
               ))}
             </MoviesCardsWrap>
           </View>

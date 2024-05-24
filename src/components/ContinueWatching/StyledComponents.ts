@@ -4,6 +4,7 @@ export const Wrap = styled.TouchableOpacity`
   background-color: #3598D0;
   border-radius: 12px;
   height: 68px;
+  min-height: 68px;
   flex: 1;  
   margin-horizontal: 16px;
   align-items: center;
