@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, memo } from 'react';
 import { ActivityIndicator, View, ImageURISource, TouchableOpacity } from 'react-native';
 import Video, { VideoRef } from 'react-native-video';
 import Slider from '@react-native-community/slider';
@@ -24,7 +24,7 @@ type VideoPlayerProps = {
   setLastMovieCb: (value: (LastMovieType | ((prevValue: (LastMovieType | undefined)) => (LastMovieType | undefined)) | undefined)) => void,
 };
 
-const VideoPlayer = ({ video, shouldPlay, startTime, movie, onEndCb, setLastMovieCb }: VideoPlayerProps) => {
+const VideoPlayer = memo(({ video, shouldPlay, startTime, movie, onEndCb, setLastMovieCb }: VideoPlayerProps) => {
   const videoRef = useRef<VideoRef>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const progressRef = useRef<number | undefined>(0);
@@ -182,6 +182,6 @@ const VideoPlayer = ({ video, shouldPlay, startTime, movie, onEndCb, setLastMovi
       {isLoading && <ActivityIndicator color="#fff" style={{ position: 'absolute' }} />}
     </View>
   );
-};
+});
 
 export { VideoPlayer };
