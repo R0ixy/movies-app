@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, memo } from 'react';
-import { ActivityIndicator, View, ImageURISource, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, ImageURISource, TouchableOpacity } from 'react-native';
 import Video, { VideoRef } from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +9,8 @@ import sliderThumb from '../../assets/images/slider-thumb.png';
 import { Icon } from '../Icon';
 import { PlayPauseSwitcher } from '../PlayPauseSwitcher';
 import { MovieType, LastMovieType } from '../../types';
-import { EpisodeNumber, Footer, Header, SliderWrap, TimeText, TimeWrap } from './StyledComponents.ts';
+import { Wrap, EpisodeNumber, Footer, Header, SliderWrap, TimeText, TimeWrap } from './StyledComponents.ts';
+import { formatSeconds } from './helpers.ts';
 
 type VideoPlayerProps = {
   video: {
@@ -48,18 +49,6 @@ const VideoPlayer = memo(({ video, shouldPlay, startTime, movie, onEndCb, setLas
       videoRef.current.seek(time);
       setCurrentTime(time);
     }
-  };
-
-  const formatSeconds = (seconds: number) => {
-    const roundedSeconds = Math.round(Number(seconds));
-
-    const minutes = Math.floor(roundedSeconds / 60);
-    const remainingSeconds = roundedSeconds % 60;
-
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-
-    return `${formattedMinutes}:${formattedSeconds}`;
   };
 
   const startTimer = () => {
@@ -101,28 +90,18 @@ const VideoPlayer = memo(({ video, shouldPlay, startTime, movie, onEndCb, setLas
     };
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (shouldPlay && progressRef.current) {
-        setLastMovieCb({
-          episode: video.episode,
-          time: progressRef.current,
-          movie,
-        });
-      }
-    };
+  useEffect(() => () => {
+    if (shouldPlay && progressRef.current) {
+      setLastMovieCb({
+        episode: video.episode,
+        time: progressRef.current,
+        movie,
+      });
+    }
   }, [shouldPlay]);
 
   return (
-    <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#0F0F0F',
-        width: width,
-        height: height,
-      }}
-    >
+    <Wrap style={{ width: width, height: height }}>
       <Video
         onTouchStart={handleTouch}
         source={{ uri: video.url }}
@@ -151,12 +130,12 @@ const VideoPlayer = memo(({ video, shouldPlay, startTime, movie, onEndCb, setLas
         <>
           <Header colors={['#0F0F0F', 'rgba(0,0,0,0)']}>
             <TouchableOpacity onPress={navigation.goBack} style={{ position: 'absolute', left: 22 }}>
-              <Icon name="close" size={24} />
+              <Icon name="close" size={24}/>
             </TouchableOpacity>
             <EpisodeNumber>Episode {video.episode}</EpisodeNumber>
           </Header>
           <Footer colors={['rgba(0,0,0,0)', '#0F0F0F']}>
-            <PlayPauseSwitcher paused={isPaused} onPressCb={onPlayPausePress} styleWrapper={{ bottom: 7 }} />
+            <PlayPauseSwitcher paused={isPaused} onPressCb={onPlayPausePress} styleWrapper={{ bottom: 7 }}/>
             <SliderWrap>
               <Slider
                 style={{
@@ -179,8 +158,8 @@ const VideoPlayer = memo(({ video, shouldPlay, startTime, movie, onEndCb, setLas
           </Footer>
         </>
       )}
-      {isLoading && <ActivityIndicator color="#fff" style={{ position: 'absolute' }} />}
-    </View>
+      {isLoading && <ActivityIndicator color="#fff" style={{ position: 'absolute' }}/>}
+    </Wrap>
   );
 });
 

@@ -32,3 +32,9 @@ export const IconsWrap = styled.View`
   align-items: center; 
   gap: 12px;
 `;
+
+export const giftImageStyle = {
+  height: 43,
+  width: 43,
+  marginBottom: 8,
+};

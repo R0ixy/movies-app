@@ -1,6 +1,12 @@
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
+export const Wrap = styled.View`
+  align-items: center;
+  justify-content: center;
+  background-color: #0F0F0F;
+`;
+
 export const Header = styled(LinearGradient)`
   width: 100%;
   height: 60px;

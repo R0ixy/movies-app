@@ -9,7 +9,7 @@ import { MovieBanner, MovieCard, Icon, ContinueWatching } from '../../components
 import { LastMovieType, MovieType } from '../../types';
 import { MMKV } from '../../asyncStore';
 
-import { MoviesCardsWrap, SectionHeader, Title, Wrapper, IconsWrap } from './StyledComponents.ts';
+import { MoviesCardsWrap, SectionHeader, Title, Wrapper, IconsWrap, giftImageStyle } from './StyledComponents.ts';
 import type { HomeStackParamList } from './HomeScreenStack.tsx';
 
 type HomeScreenProps = StackScreenProps<HomeStackParamList, 'HomeScreen'>;
@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           <Title>Home</Title>
           <IconsWrap>
             <TouchableOpacity activeOpacity={0.8}>
-              <Image source={gift} style={{ height: 43, width: 43, marginBottom: 8 }} />
+              <Image source={gift} style={giftImageStyle} />
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8}>
               <Icon name="search" size={24} />
