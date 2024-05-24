@@ -54,7 +54,6 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   return (
     <Wrapper>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
         <SectionHeader>
           <Title>Home</Title>
           <IconsWrap>
@@ -105,7 +104,6 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             </MoviesCardsWrap>
           </View>
         ))}
-        </View>
       </ScrollView>
     </Wrapper>
   );

@@ -27,6 +27,7 @@ type VideoPlayerProps = {
 const VideoPlayer = ({ video, shouldPlay, startTime, movie, onEndCb, setLastMovieCb }: VideoPlayerProps) => {
   const videoRef = useRef<VideoRef>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const progressRef = useRef<number | undefined>(0);
 
   const navigation = useNavigation();
   const { width, height } = useSafeAreaFrame();
@@ -101,14 +102,16 @@ const VideoPlayer = ({ video, shouldPlay, startTime, movie, onEndCb, setLastMovi
   }, []);
 
   useEffect(() => {
-    if (shouldPlay && Math.floor(currentTime) % 5 === 0) { // saving video state every 5 seconds
-      setLastMovieCb({
-        currentEpisode: video.episode,
-        currentTime: currentTime,
-        movie,
-      });
-    }
-  }, [currentTime, shouldPlay]);
+    return () => {
+      if (shouldPlay && progressRef.current) {
+        setLastMovieCb({
+          currentEpisode: video.episode,
+          currentTime: progressRef.current,
+          movie,
+        });
+      }
+    };
+  }, [shouldPlay]);
 
   return (
     <View
@@ -129,9 +132,15 @@ const VideoPlayer = ({ video, shouldPlay, startTime, movie, onEndCb, setLastMovi
           setIsLoading(false);
           setDuration(data.duration);
         }}
-        onEnd={onEndCb}
+        onEnd={() => {
+          progressRef.current = undefined;
+          onEndCb();
+        }}
         paused={isPaused}
-        onProgress={(data) => setCurrentTime(data.currentTime)}
+        onProgress={(data) => {
+          setCurrentTime(data.currentTime);
+          progressRef.current = data.currentTime;
+        }}
         resizeMode="cover"
         style={{
           width: '100%',
