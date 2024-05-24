@@ -32,7 +32,7 @@ export const GenreText = styled.Text`
   color: #F5F5F5;
   text-transform: uppercase;
   font-size: 11px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.4px;
 `;
 
 export const TitleSection = styled.View`

@@ -28,7 +28,6 @@ export const EpisodeNumber = styled.Text`
   font-size: 20px;
   font-weight: 700;
   line-height: 24px;
-  letter-spacing: -0.005em;
   color: #F5F5F5;
 `;
 
@@ -46,6 +45,6 @@ export const TimeText = styled.Text`
   font-size: 11px;
   font-weight: 600;
   line-height: 14px;
-  letter-spacing: 0.008em;
+  letter-spacing: 0.08px;
   color: #FFFFFF; 
 `;

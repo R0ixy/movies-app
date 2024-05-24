@@ -25,7 +25,7 @@ export const ReleaseDate = styled.Text`
   text-transform: uppercase;
   font-size: 11px;
   line-height: 14px;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.1px;
   margin-bottom: 4px;  
 `;
 
