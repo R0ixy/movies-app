@@ -84,7 +84,10 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             <SectionHeader marginTop="36px">
               <Title>Continue Watching</Title>
             </SectionHeader>
-            <ContinueWatching movie={lastMovie.movie} onPressCb={() => navigation.navigate('VideoPlayer', { movie: lastMovie?.movie })} />
+            <ContinueWatching
+              movie={lastMovie.movie}
+              onPressCb={() => navigation.navigate('VideoPlayer', { movie: lastMovie?.movie, continueWatching: true })}
+            />
           </View>
         )}
         {content?.sections?.map(item => (

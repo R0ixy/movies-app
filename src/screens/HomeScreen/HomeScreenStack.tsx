@@ -7,7 +7,7 @@ import { HomeScreen } from './HomeScreen';
 
 export type HomeStackParamList = {
   HomeScreen: undefined,
-  VideoPlayer: { movie: MovieType },
+  VideoPlayer: { movie: MovieType, continueWatching?: boolean },
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();

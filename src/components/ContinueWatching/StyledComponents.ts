@@ -5,12 +5,11 @@ export const Wrap = styled.TouchableOpacity`
   border-radius: 12px;
   height: 68px;
   min-height: 68px;
-  flex: 1;  
   margin-horizontal: 16px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;  
-  padding: 6px 16px 6px 6px;  
+  padding: 6px 16px 6px 6px;
 `;
 
 export const MovieTitle = styled.Text`

@@ -105,8 +105,8 @@ const VideoPlayer = ({ video, shouldPlay, startTime, movie, onEndCb, setLastMovi
     return () => {
       if (shouldPlay && progressRef.current) {
         setLastMovieCb({
-          currentEpisode: video.episode,
-          currentTime: progressRef.current,
+          episode: video.episode,
+          time: progressRef.current,
           movie,
         });
       }
