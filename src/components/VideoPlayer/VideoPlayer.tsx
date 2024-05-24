@@ -8,7 +8,7 @@ import { useSafeAreaFrame } from 'react-native-safe-area-context';
 import sliderThumb from '../../assets/images/slider-thumb.png';
 import { Icon } from '../Icon';
 import { PlayPauseSwitcher } from '../PlayPauseSwitcher';
-import { LastMovieType } from '../../types';
+import { MovieType, LastMovieType } from '../../types';
 import { EpisodeNumber, Footer, Header, SliderWrap, TimeText, TimeWrap } from './StyledComponents.ts';
 
 type VideoPlayerProps = {
@@ -19,11 +19,12 @@ type VideoPlayerProps = {
   },
   shouldPlay: boolean,
   startTime: number,
+  movie: MovieType,
   onEndCb: () => void,
   setLastMovieCb: (value: (LastMovieType | ((prevValue: (LastMovieType | undefined)) => (LastMovieType | undefined)) | undefined)) => void,
-}
+};
 
-const VideoPlayer = ({ video, shouldPlay, startTime, onEndCb, setLastMovieCb }: VideoPlayerProps) => {
+const VideoPlayer = ({ video, shouldPlay, startTime, movie, onEndCb, setLastMovieCb }: VideoPlayerProps) => {
   const videoRef = useRef<VideoRef>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -58,7 +59,7 @@ const VideoPlayer = ({ video, shouldPlay, startTime, onEndCb, setLastMovieCb }: 
     const formattedSeconds = String(remainingSeconds).padStart(2, '0');
 
     return `${formattedMinutes}:${formattedSeconds}`;
-  }
+  };
 
   const startTimer = () => {
     if (timerRef.current) {
@@ -106,10 +107,10 @@ const VideoPlayer = ({ video, shouldPlay, startTime, onEndCb, setLastMovieCb }: 
         currentTime: currentTime,
         movie: {
           id: video.id,
-          title: '',
-          description: '',
-          image: '',
-        }
+          title: movie.title,
+          description: movie.description,
+          image: movie.image,
+        },
       });
     }
   }, [currentTime, shouldPlay]);
@@ -130,7 +131,7 @@ const VideoPlayer = ({ video, shouldPlay, startTime, onEndCb, setLastMovieCb }: 
         ref={videoRef}
         onLoadStart={() => setIsLoading(true)}
         onLoad={(data) => {
-          setIsLoading(false)
+          setIsLoading(false);
           setDuration(data.duration);
         }}
         onEnd={onEndCb}
@@ -155,7 +156,7 @@ const VideoPlayer = ({ video, shouldPlay, startTime, onEndCb, setLastMovieCb }: 
             <SliderWrap>
               <Slider
                 style={{
-                  width: '100%'
+                  width: '100%',
                 }}
                 tapToSeek
                 value={currentTime}

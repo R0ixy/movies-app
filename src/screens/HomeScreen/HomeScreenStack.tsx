@@ -1,12 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { MovieType } from '../../types';
+import { VideoPlayerScreen } from '../VideoPlayerScreen/VideoPlayerScreen.tsx';
 import { HomeScreen } from './HomeScreen';
-import { VideoPlayerScreen } from "../VideoPlayerScreen/VideoPlayerScreen.tsx";
 
 export type HomeStackParamList = {
-  HomeScreen: undefined;
-  VideoPlayer: undefined;
+  HomeScreen: undefined,
+  VideoPlayer: { movie: MovieType },
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();

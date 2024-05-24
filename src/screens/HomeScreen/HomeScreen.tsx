@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
-import remoteConfig from "@react-native-firebase/remote-config";
+import remoteConfig from '@react-native-firebase/remote-config';
 
 import gift from '../../assets/images/gift.png';
 import { MovieBanner, MovieCard, Icon, ContinueWatching } from '../../components';
-import { BannerMovie, CardMovie } from '../../types'
+import { MovieType } from '../../types';
 
 import { MoviesCardsWrap, SectionHeader, Title, Wrapper, IconsWrap } from './StyledComponents.ts';
 import type { HomeStackParamList } from './HomeScreenStack.tsx';
@@ -13,15 +13,15 @@ import type { HomeStackParamList } from './HomeScreenStack.tsx';
 type HomeScreenProps = StackScreenProps<HomeStackParamList, 'HomeScreen'>;
 
 type SectionItem = {
-  id: number;
-  label: string;
-  content: CardMovie[];
-}
+  id: number,
+  label: string,
+  content: MovieType[],
+};
 
 type HomeScreenContentType = {
-  banners?: BannerMovie[];
-  sections?: SectionItem[];
-}
+  banners?: MovieType[],
+  sections?: SectionItem[],
+};
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
@@ -37,9 +37,9 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     const config = remoteConfig().getValue('content').asString();
     if (config) {
       return JSON.parse(config);
-    } else {
+    } 
       return null;
-    }
+    
   };
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                 <MovieBanner
                   key={banner.id}
                   movie={banner}
-                  onPress={() => navigation.navigate('VideoPlayer')}
+                  onPress={() => navigation.navigate('VideoPlayer', { movie: banner })}
                   styleWrapper={{ marginRight: 12 }}
                 />
               ))}

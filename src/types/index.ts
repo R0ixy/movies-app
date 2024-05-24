@@ -1,16 +1,10 @@
-export type BannerMovie = {
-  id: number;
-  title: string;
-  genre: string;
-  description: string;
-  image: string;
-}
-
-export type CardMovie = {
-  id: number;
-  title: string;
-  releaseDate: string;
-  image: string;
+export type MovieType = {
+  id: number,
+  title: string,
+  genre: string,
+  description: string,
+  releaseDate: string,
+  image: string,
 };
 
 export type LastMovieType = {
@@ -22,4 +16,4 @@ export type LastMovieType = {
     description: string,
     image: string,
   }
-}
+};

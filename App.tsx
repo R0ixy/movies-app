@@ -4,7 +4,6 @@ import { SafeAreaView, StatusBar } from 'react-native';
 
 import { Root } from './src/screens';
 
-
 function App(): React.JSX.Element {
 
   return (
@@ -17,6 +16,5 @@ function App(): React.JSX.Element {
     </SafeAreaView>
   );
 }
-
 
 export default App;

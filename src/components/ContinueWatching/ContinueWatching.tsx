@@ -4,11 +4,11 @@ import { Image, View } from 'react-native';
 import { Icon } from '../Icon';
 import { MovieDescription, MovieTitle, RowWrap, Wrap } from './StyledComponents.ts';
 
-const ContinueWatching = ({  }) => {
+const ContinueWatching = () => {
 
   const movie = {
-    image: 'https://firebasestorage.googleapis.com/v0/b/test-project-59f57.appspot.com/o/cover-1.1.png?alt=media&token=6ccfa22c-c565-41d9-a0f2-92cb06b73827'
-  }
+    image: 'https://firebasestorage.googleapis.com/v0/b/test-project-59f57.appspot.com/o/cover-1.1.png?alt=media&token=6ccfa22c-c565-41d9-a0f2-92cb06b73827',
+  };
 
   return (
     <Wrap>

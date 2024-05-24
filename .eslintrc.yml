@@ -22,9 +22,6 @@ rules:
   jsx-quotes:
     - error
     - prefer-double
-  '@typescript-eslint/explicit-function-return-type':
-    - error
-    - allowTypedFunctionExpressions: true
   '@typescript-eslint/quotes':
     - error
     - single

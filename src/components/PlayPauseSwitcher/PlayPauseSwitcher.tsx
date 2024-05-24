@@ -6,8 +6,8 @@ import { Icon } from '../Icon';
 type PlayPauseSwitcherProps = {
   paused: boolean,
   onPressCb: () => void,
-  styleWrapper?: object
-}
+  styleWrapper?: object,
+};
 
 const PlayPauseSwitcher = ({ paused, onPressCb, styleWrapper }: PlayPauseSwitcherProps) => (
   <TouchableOpacity onPress={onPressCb} style={styleWrapper}>

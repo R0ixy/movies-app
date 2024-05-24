@@ -7,27 +7,23 @@ import Play from '../../assets/icons/play.svg';
 import Pause from '../../assets/icons/pause.svg';
 import ArrowRight from '../../assets/icons/arrow-right.svg';
 
+type IconName = 'locked' | 'search' | 'close' | 'play' | 'pause' | 'arrowRight';
+
 type IconPropsType = {
   size?: number,
-  name: string,
+  name: IconName,
   height?: number,
   width?: number,
-}
+};
 
-const icons: { [key: string]: React.FC<React.SVGProps<SVGSVGElement>> } = {
-  // @ts-ignore
+const icons: { [key in IconName]: React.FC<React.SVGProps<SVGSVGElement>> } = {
   locked: Locked,
-  // @ts-ignore
   search: Search,
-  // @ts-ignore
   close: Close,
-  // @ts-ignore
   play: Play,
-  // @ts-ignore
   pause: Pause,
-  // @ts-ignore
   arrowRight: ArrowRight,
-}
+};
 
 const Icon = ({ size, name, height, width, ...rest }: IconPropsType) => {
   const SvgIcon = icons[name];

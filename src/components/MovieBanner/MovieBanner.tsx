@@ -1,7 +1,7 @@
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 
-import { BannerMovie } from '../../types';
+import { MovieType } from '../../types';
 import {
   GenreLabel,
   GenreText,
@@ -9,14 +9,14 @@ import {
   MovieImage,
   MovieName,
   TitleSection,
-  Wrapper
+  Wrapper,
 } from './StyledComponents.ts';
 
 type MovieBannerProps = {
-  movie: BannerMovie,
+  movie: MovieType,
   onPress: () => void,
-  styleWrapper?: object | {}
-}
+  styleWrapper?: object,
+};
 
 const MovieBanner = ({ movie, onPress, styleWrapper }: MovieBannerProps) => {
   const { width } = useWindowDimensions();
