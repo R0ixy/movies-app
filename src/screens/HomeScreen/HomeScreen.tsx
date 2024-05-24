@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   const fetchRemoteConfig = async () => {
     await remoteConfig().setConfigSettings({
-      minimumFetchIntervalMillis: 3600000,
+      minimumFetchIntervalMillis: 60000,
     });
 
     await remoteConfig().fetchAndActivate();

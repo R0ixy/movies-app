@@ -61,6 +61,8 @@ const VideoPlayerScreen = ({ route }: HomeScreenProps) => {
 
   const [lastMovie, setLastMovie] = useMMKVStorage<LastMovieType | undefined>('lastMovie', MMKV, undefined);
 
+  const isCurrentMovie = movie?.id === lastMovie?.movie?.id;
+
   const [currentViewableItemIndex, setCurrentViewableItemIndex] = useState(0);
   const viewabilityConfig = { viewAreaCoveragePercentThreshold: 50 };
 
@@ -80,8 +82,8 @@ const VideoPlayerScreen = ({ route }: HomeScreenProps) => {
     }
   };
 
-  const getStartTime = (lastMovie: LastMovieType | undefined, index: number) => {
-    if (!lastMovie) return 0;
+  const getStartTime = (lastMovie: LastMovieType | undefined, isCurrentMovie: boolean, index: number) => {
+    if (!lastMovie || !isCurrentMovie) return 0;
     return lastMovie.currentEpisode - 1 === index ? lastMovie.currentTime : 0;
   };
 
@@ -98,12 +100,12 @@ const VideoPlayerScreen = ({ route }: HomeScreenProps) => {
               else setLastMovie(undefined);
             }}
             shouldPlay={index === currentViewableItemIndex}
-            startTime={getStartTime(lastMovie, index)}
+            startTime={getStartTime(lastMovie, isCurrentMovie, index)}
             setLastMovieCb={setLastMovie}
             movie={movie}
           />
         )}
-        initialScrollIndex={lastMovie ? lastMovie.currentEpisode - 1 : 0}
+        initialScrollIndex={lastMovie && isCurrentMovie ? lastMovie.currentEpisode - 1 : 0}
         getItemLayout={(data, index) => ({ length: height, offset: height * index, index })}
         keyExtractor={item => String(item.id)}
         snapToInterval={height}
